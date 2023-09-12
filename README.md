@@ -20,7 +20,7 @@
 
 ### High Level Design
 
-![./media/CaughtYouBastard.png](./media/CaughtYouBastard.png)
+![./img/highleveldesign.jpg](./img/highleveldesign.jpg)
 
 ### UML
 

@@ -1,6 +1,6 @@
 # Team: SystemError
 
-## CaughtYouBastard
+## GoodMorningFairy
 
 ### Problem Definition
 

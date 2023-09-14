@@ -24,7 +24,7 @@
 
 ### UML
 
-![./img//UMLimg.jpg(./img//UMLimg.jpg)
+![./img/UMLimg.jpg](./img/UMLimg.jpg)
 
 ### Work Breakdown Sheet
 

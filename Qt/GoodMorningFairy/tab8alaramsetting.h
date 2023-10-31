@@ -16,19 +16,19 @@ class Tab8AlaramSetting : public QWidget
 public:
     explicit Tab8AlaramSetting(QWidget *parent = nullptr);
     ~Tab8AlaramSetting();
+    SocketClient * pSocketClient;
 
 private:
     Ui::Tab8AlaramSetting *ui;
 
-/*
 private slots:
     void connectToServerSlot(bool);
-    void socketRecvpdateSlot(QString);
-    void socketSendServer();
-    void slotConnectServer();
-    void slotClosedByServer();
+//    void socketRecvpdateSlot(QString);
+//    void socketSendServer();
+//    void slotConnectServer();
+//    void slotClosedByServer();
 
-*/
+
 };
 
 #endif // TAB8ALARAMSETTING_H

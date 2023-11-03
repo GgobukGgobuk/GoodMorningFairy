@@ -2,6 +2,7 @@
 #include <RtcDS1302.h>
 //#include <LiquidCrystal.h> 
 #include <LiquidCrystal_I2C.h> 
+#include <SoftwareSerial.h>
 #define debounceTime 75 // <<- Set debounce Time (unit ms)
 
 #define NOTE_B0 31
@@ -29,7 +30,14 @@ int tempo = 200;
 
 int buttonState_2 = 0;
 int buttonState_3 = 0;
+SoftwareSerial mySerial(0, 1);
 
+const byte numChars = 8;
+char receivedChars[numChars];
+char endMaker = '\0';
+char rc;
+static byte ndx = 0;
+boolean newData = false;
 
 void setup () 
 {
@@ -40,13 +48,16 @@ void setup ()
 
   delay(1000);
 
-
+  /*
+  mySerial.begin(9600);
+  mySerial.println("Hello, world?");
+  */
+  
   Serial.begin(9600);
   Serial.print("Compiled: ");
   Serial.print(__DATE__);
   Serial.print("\t");
   Serial.println(__TIME__);
-
     //lcd.begin(16, 2);
     //lcd.clear();
     lcd.init();
@@ -105,6 +116,60 @@ int * addrT = 0;
 char test[16] = "14:39:30";
 void loop () 
 {
+  Serial.write(Serial.available());
+  while (Serial.available()>0)
+  {
+    char receivedChar = Serial.read();
+    Serial.print("test is : ");
+    Serial.println(Serial.available());
+    sprintf(test, "%02u", Serial.available());
+    
+      // 시리얼로부터 데이터 읽기
+    if(receivedChar != endMaker)
+    {
+      receivedChars[ndx] = receivedChar;
+      ndx++;
+      if(ndx  >= numChars)
+      {
+        ndx = numChars - 1;
+      }
+    }
+    else 
+    {
+      receivedChars[ndx] = '\0';
+      ndx = 0;
+      //newData = true;
+    }
+
+
+  }
+    lcd.setCursor(0, 0);
+    lcd.print(receivedChars);
+    receivedChars[0] = '\0';
+  //mySerial.println("Hello, world?");
+  /*
+  Serial.print("receivedChar is ");
+  Serial.print(receivedChar);
+  Serial.print("Received sizeof: ");
+  Serial.println(strlen(receivedChar));
+  */
+  
+  if (mySerial.available())
+    Serial.write(mySerial.read());
+  if (Serial.available())
+    mySerial.write(Serial.read());
+  /*
+  if(strlen(receivedChar) > 2)
+  {
+    Serial.print("Received: ");
+    Serial.println(receivedChars);
+    lcd.setCursor(0, 0);
+    lcd.print(receivedChars);
+  }
+  */
+
+
+  /*
   buttonState_2 = digitalRead(buttonPin_2);
   //sprintf(timestring, "%02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
   sprintf(test, "%02u:%02u:%02u", 14, 52, 30);
@@ -114,6 +179,7 @@ void loop ()
   Serial.println(timestring);
   Serial.print("test is ");
   Serial.println(test);
+  */
   //if(buttonState_2 == HIGH)
   //if(1)
   if(buttonState_2 == HIGH)
@@ -143,11 +209,11 @@ void printDateTime(const RtcDateTime& dt)
     String stateStr = "24-hr system";
     short DOW = dt.DayOfWeek();
     
-    sprintf(daystring, "%4u-%02u-%02u %s", dt.Year(), dt.Month(), dt.Day(), dayArray[DOW]);
+    sprintf(daystring, "  %4u-%02u-%02u%s", dt.Year(), dt.Month(), dt.Day(), dayArray[DOW]);
 
     short Hour = dt.Hour();
 
-    sprintf(timestring, "    %02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
+    sprintf(timestring, "     %02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
   /*
     if ( state ) { // 24-hr system
       //lcd.clear();
@@ -161,6 +227,8 @@ void printDateTime(const RtcDateTime& dt)
        sprintf(timestring, "  %2d:%02u:%02u <%s>", Hour, dt.Minute(), dt.Second(), flag.c_str());
     }
     */
+
+    /*
     Serial.print("State ");
     Serial.print(state);
     Serial.print(": "); 
@@ -169,6 +237,7 @@ void printDateTime(const RtcDateTime& dt)
     lcd.print(timestring);
     lcd.setCursor(0, 1);
     lcd.print(daystring);
+    */
 }
 
 void buttonPushed() {

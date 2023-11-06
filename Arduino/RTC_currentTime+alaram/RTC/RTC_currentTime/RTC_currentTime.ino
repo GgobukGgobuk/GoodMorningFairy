@@ -113,7 +113,7 @@ void setup ()
 char timestring[16];
 int * addrT = 0;
 
-char test[16] = "14:39:30";
+char test[16];
 void loop () 
 {
   Serial.write(Serial.available());
@@ -168,21 +168,20 @@ void loop ()
   }
   */
 
-
-  /*
   buttonState_2 = digitalRead(buttonPin_2);
   //sprintf(timestring, "%02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
-  sprintf(test, "%02u:%02u:%02u", 14, 52, 30);
+  
+  sprintf(test, "%02u:%02u:%02u", 13, 25, 30);
   //sprintf(timestring, "%02u", 1);
   //sprintf(test, "%02u", 1);
   //if(buttonState_2 == HIGH)
   Serial.println(timestring);
   Serial.print("test is ");
-  Serial.println(test);
-  */
+  Serial.println(strcmp(timestring, test));
+  //sprintf(timestring, "%02u:%02u:%02u", 14, 52, 30);
   //if(buttonState_2 == HIGH)
   //if(1)
-  if(buttonState_2 == HIGH)
+  if(strcmp(timestring,test)==0) // todo: strCompare 사용해보긴
   {
     Serial.println("Alaram on");
     alarm_on();
@@ -213,7 +212,7 @@ void printDateTime(const RtcDateTime& dt)
 
     short Hour = dt.Hour();
 
-    sprintf(timestring, "     %02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
+    sprintf(timestring, "%02u:%02u:%02u", dt.Hour(), dt.Minute(), dt.Second());
   /*
     if ( state ) { // 24-hr system
       //lcd.clear();

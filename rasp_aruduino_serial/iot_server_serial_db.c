@@ -62,7 +62,27 @@ void setup(void);
 
 int main(int argc, char *argv[])
 {
-	setup();
+  
+		MYSQL conn; 
+
+		if(&conn == NULL)
+		{
+			printf("MYSQL connect error: %s\n", mysql_error(&conn));
+			exit(1);
+		}
+		mysql_init(&conn);
+		if(mysql_real_connect(&conn,"localhost", "ubuntu", "ubuntu", "jh_alaram_proj", 0, NULL, 0)==NULL)
+		{
+		  printf("MYSQL 연결 오류: %s\n", mysql_error(&conn));
+		  exit(1);
+		}
+		
+		mysql_query(&conn, "INSERT INTO alaram(alaram_time) values ('456')") ;
+		
+		mysql_close(&conn);
+
+		setup();
+
 		int serv_sock, clnt_sock;
 		struct sockaddr_in serv_adr, clnt_adr;
 		int clnt_adr_sz;
@@ -318,6 +338,9 @@ void setup(){
     fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
     exit(1); //error
   }
+
+
+  //if(connkk
 }
 
 

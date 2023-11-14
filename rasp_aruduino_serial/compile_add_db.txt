@@ -1,0 +1,6 @@
+mysql_config --cflags
+
+//sudo gcc iot_server_serial.c -o hello -l wiringPi -DRaspberryPi -D_REENTRANT -pthread -L/usr/lib/aarch64-linux-gnu -lmysqlclient -lpthread -ldl -lssl -lcrypto -lresolv -lm -lrt
+
+sudo gcc iot_server_serial_db.c -o hello -l wiringPi -DRaspberryPi -D_REENTRANT -pthread -L/usr/lib/aarch64-linux-gnu -I/usr/include/mysql -lmysqlclient
+

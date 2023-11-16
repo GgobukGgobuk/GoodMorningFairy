@@ -1,0 +1,2 @@
+ mysql_config --libs
+ sudo gcc iot_server_serial_db.c -o hello -l wiringPi -DRaspberryPi -D_REENTRANT -pthread ${mysql_config --libs}

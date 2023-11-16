@@ -1,0 +1,8 @@
+show databases;
+create database jh_alaram_proj DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE alarm(
+id INT NOT NULL AUTO_INCREMENT,
+alaram_time VARCHAR(30) NOT NULL,
+PRIMARY KEY (id)
+);
